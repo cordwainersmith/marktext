@@ -247,8 +247,12 @@
       "expandAll": "全部展開",
       "collapseAll": "全部折疊"
     },
+    "openedFiles": {
+      "searchPlaceholder": "搜尋已開啟的檔案"
+    },
     "icons": {
       "files": "檔案",
+      "openedFiles": "已開啟的檔案",
       "search": "搜尋",
       "toc": "目錄",
       "wikiInbox": "放入 llm-wiki 收件匣",

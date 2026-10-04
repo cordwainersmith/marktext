@@ -247,8 +247,12 @@
       "expandAll": "Expand all",
       "collapseAll": "Collapse all"
     },
+    "openedFiles": {
+      "searchPlaceholder": "Search open files"
+    },
     "icons": {
       "files": "Files",
+      "openedFiles": "Opened files",
       "search": "Search",
       "toc": "Table of Contents",
       "wikiInbox": "Drop into llm-wiki inbox",

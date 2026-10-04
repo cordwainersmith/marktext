@@ -247,8 +247,12 @@
       "expandAll": "모두 펼치기",
       "collapseAll": "모두 접기"
     },
+    "openedFiles": {
+      "searchPlaceholder": "열린 파일 검색"
+    },
     "icons": {
       "files": "파일",
+      "openedFiles": "열린 파일",
       "search": "검색",
       "toc": "목차",
       "wikiInbox": "llm-wiki 수신함으로 보내기",

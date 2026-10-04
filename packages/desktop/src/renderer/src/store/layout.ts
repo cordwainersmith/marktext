@@ -61,6 +61,12 @@ export const useLayoutStore = defineStore('layout', () => {
     return Number(sideBarWidth.value)
   })
 
+  // The opened-files panel replaces the tab strip, so the strip hides while it
+  // is on screen without touching the persisted showTabBar preference.
+  const tabBarShown = computed<boolean>(
+    () => showTabBar.value && !(showSideBar.value && rightColumn.value === 'openedFiles')
+  )
+
   function SET_LAYOUT(
     layout: LayoutPartial,
     { scheduleBufferUpdate = true }: SetLayoutOptions = {}
@@ -189,6 +195,7 @@ export const useLayoutStore = defineStore('layout', () => {
     showTabBar,
     sideBarWidth,
     effectiveSideBarWidth,
+    tabBarShown,
     SET_LAYOUT,
     CREATE_BUFFERED_STATE,
     RESTORE_BUFFERED_STATE,

@@ -247,8 +247,12 @@
       "expandAll": "Expandir todo",
       "collapseAll": "Contraer todo"
     },
+    "openedFiles": {
+      "searchPlaceholder": "Buscar en archivos abiertos"
+    },
     "icons": {
       "files": "Archivos",
+      "openedFiles": "Archivos abiertos",
       "search": "Buscar",
       "toc": "Tabla de Contenidos",
       "wikiInbox": "Enviar a la bandeja de entrada de llm-wiki",

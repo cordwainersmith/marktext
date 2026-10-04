@@ -247,8 +247,12 @@
       "expandAll": "Alles uitklappen",
       "collapseAll": "Alles inklappen"
     },
+    "openedFiles": {
+      "searchPlaceholder": "Zoeken in geopende bestanden"
+    },
     "icons": {
       "files": "Bestanden",
+      "openedFiles": "Geopende bestanden",
       "search": "Zoeken",
       "toc": "Inhoudsopgave",
       "wikiInbox": "Naar llm-wiki-postvak IN sturen",

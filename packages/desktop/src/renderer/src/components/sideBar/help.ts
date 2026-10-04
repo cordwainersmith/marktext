@@ -1,5 +1,6 @@
 import {
   Folder as FilesIcon,
+  Files as OpenedFilesIcon,
   Search as SearchIcon,
   Memo as TocIcon,
   Promotion as WikiInboxIcon,
@@ -18,6 +19,11 @@ export const sideBarIcons: SideBarIconEntry[] = [
     id: 'files',
     name: () => t('sideBar.icons.files'),
     icon: FilesIcon
+  },
+  {
+    id: 'openedFiles',
+    name: () => t('sideBar.icons.openedFiles'),
+    icon: OpenedFilesIcon
   },
   {
     id: 'search',

@@ -247,8 +247,12 @@
       "expandAll": "すべて展開",
       "collapseAll": "すべて折りたたむ"
     },
+    "openedFiles": {
+      "searchPlaceholder": "開いているファイルを検索"
+    },
     "icons": {
       "files": "ファイル",
+      "openedFiles": "開いているファイル",
       "search": "検索",
       "toc": "目次",
       "wikiInbox": "llm-wiki の受信トレイに送る",

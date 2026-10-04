@@ -247,8 +247,12 @@
       "expandAll": "Tümünü genişlet",
       "collapseAll": "Tümünü daralt"
     },
+    "openedFiles": {
+      "searchPlaceholder": "Açık dosyalarda ara"
+    },
     "icons": {
       "files": "Dosyalar",
+      "openedFiles": "Açık dosyalar",
       "search": "Ara",
       "toc": "İçindekiler",
       "wikiInbox": "llm-wiki gelen kutusuna bırak",
