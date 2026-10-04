@@ -40,7 +40,10 @@
         v-for="{ tab, snippet } of matches"
         :key="tab.id"
       >
-        <opened-file :file="tab" />
+        <opened-file
+          :file="tab"
+          :folder="folderLabel(tab.pathname, home)"
+        />
         <div
           v-if="snippet"
           class="snippet"
@@ -66,12 +69,13 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useEditorStore } from '@/store/editor'
 import OpenedFile from './treeOpenedTab.vue'
-import { filterOpenedFiles } from './openedFilesFilter'
+import { filterOpenedFiles, folderLabel } from './openedFilesFilter'
 
 const { t } = useI18n()
 const editorStore = useEditorStore()
 const { tabs } = storeToRefs(editorStore)
 
+const home = window.electron.process.env.HOME
 const query = ref('')
 const matches = computed(() => filterOpenedFiles(tabs.value, query.value))
 </script>

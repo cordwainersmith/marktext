@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import type { IFileState } from '@shared/types/files'
-import { filterOpenedFiles } from '@/components/sideBar/openedFilesFilter'
+import { filterOpenedFiles, folderLabel } from '@/components/sideBar/openedFilesFilter'
 
 const tab = (filename: string, markdown: string): IFileState =>
   ({ id: filename, filename, markdown }) as IFileState
@@ -37,5 +37,29 @@ describe('filterOpenedFiles', () => {
     expect(snippet?.startsWith('…')).toBe(true)
     expect(snippet?.endsWith('…')).toBe(true)
     expect(snippet).toContain('needle')
+  })
+})
+
+describe('folderLabel', () => {
+  const home = '/Users/me'
+
+  it('starts at the project folder for files under ~/projects', () => {
+    expect(folderLabel('/Users/me/projects/marktext/docs/a.md', home)).toBe('marktext/docs')
+    expect(folderLabel('/Users/me/projects/marktext/a.md', home)).toBe('marktext')
+  })
+
+  it('abbreviates other paths under home with ~', () => {
+    expect(folderLabel('/Users/me/projects/a.md', home)).toBe('~/projects')
+    expect(folderLabel('/Users/me/Documents/a.md', home)).toBe('~/Documents')
+    expect(folderLabel('/Users/me/a.md', home)).toBe('~')
+  })
+
+  it('keeps paths outside home unchanged', () => {
+    expect(folderLabel('/tmp/notes/a.md', home)).toBe('/tmp/notes')
+    expect(folderLabel('/Users/meow/a.md', home)).toBe('/Users/meow')
+  })
+
+  it('is empty for untitled buffers', () => {
+    expect(folderLabel(null, home)).toBe('')
   })
 })

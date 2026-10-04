@@ -38,3 +38,19 @@ export const filterOpenedFiles = (tabs: TabDescriptor[], query: string): OpenedF
   }
   return matches
 }
+
+// The parent folder shown next to a filename. Paths under ~/projects start at
+// the project folder (e.g. `marktext/docs`), other paths under home use `~`.
+export const folderLabel = (pathname: string | null, home: string | undefined): string => {
+  if (!pathname) return ''
+  const segments = pathname.split(/[\\/]/)
+  segments.pop()
+  const dir = segments.join('/')
+  if (!home) return dir
+
+  const homeDir = home.split(/[\\/]/).join('/')
+  const projectsPrefix = `${homeDir}/projects/`
+  if (dir.startsWith(projectsPrefix)) return dir.slice(projectsPrefix.length)
+  if (dir === homeDir || dir.startsWith(`${homeDir}/`)) return `~${dir.slice(homeDir.length)}`
+  return dir
+}

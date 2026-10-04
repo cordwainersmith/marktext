@@ -13,6 +13,10 @@
       <Close />
     </el-icon>
     <span class="name">{{ file.filename }}</span>
+    <span
+      v-if="folder"
+      class="folder"
+    >{{ folder }}</span>
   </div>
 </template>
 
@@ -24,6 +28,7 @@ import type { TabDescriptor } from './types'
 
 defineProps<{
   file: TabDescriptor
+  folder?: string
 }>()
 
 const editorStore = useEditorStore()
@@ -69,9 +74,17 @@ const removeFileInTab = (file: TabDescriptor): void => {
     background: var(--sideBarItemHoverBgColor);
   }
   & > span {
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  /* Gives up its width before the filename does. */
+  & > .folder {
+    flex-shrink: 1000;
+    margin: 0 10px 0 6px;
+    font-size: 12px;
+    color: var(--sideBarTextColor);
   }
 }
 .opened-file.active {
