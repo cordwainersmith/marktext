@@ -10,31 +10,39 @@
     </div>
     <div class="title">
       <span class="text-overflow">{{ t('sideBar.tree.openedFiles') }}</span>
-      <a
+      <el-tooltip
         v-if="changedOnDisk"
-        href="javascript:;"
-        class="badge-action"
-        :title="t('sideBar.openedFiles.reloadChanged', { count: changedOnDisk })"
-        @click.stop="editorStore.RELOAD_TABS_CHANGED_ON_DISK()"
+        :content="t('sideBar.openedFiles.reloadChanged', { count: changedOnDisk })"
+        placement="bottom"
       >
-        <el-icon><Refresh /></el-icon>
-        {{ changedOnDisk }}
-      </a>
-      <a
-        v-if="locallyEdited"
-        href="javascript:;"
-        class="badge-action"
-        :title="t('sideBar.openedFiles.saveEdited', { count: locallyEdited })"
-        @click.stop="editorStore.SAVE_TABS_WITH_LOCAL_EDITS()"
-      >
-        <svg
-          class="icon"
-          aria-hidden="true"
+        <a
+          href="javascript:;"
+          class="badge-action"
+          @click.stop="editorStore.RELOAD_TABS_CHANGED_ON_DISK()"
         >
-          <use xlink:href="#icon-save-all" />
-        </svg>
-        {{ locallyEdited }}
-      </a>
+          <el-icon><Refresh /></el-icon>
+          {{ changedOnDisk }}
+        </a>
+      </el-tooltip>
+      <el-tooltip
+        v-if="locallyEdited"
+        :content="t('sideBar.openedFiles.saveEdited', { count: locallyEdited })"
+        placement="bottom"
+      >
+        <a
+          href="javascript:;"
+          class="badge-action"
+          @click.stop="editorStore.SAVE_TABS_WITH_LOCAL_EDITS()"
+        >
+          <svg
+            class="icon"
+            aria-hidden="true"
+          >
+            <use xlink:href="#icon-save-all" />
+          </svg>
+          {{ locallyEdited }}
+        </a>
+      </el-tooltip>
       <a
         href="javascript:;"
         :title="t('sideBar.tree.closeAll')"
