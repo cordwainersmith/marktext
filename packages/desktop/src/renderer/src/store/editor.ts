@@ -20,6 +20,7 @@ import { usePreferencesStore } from './preferences'
 import { useProjectStore } from './project'
 import { useLayoutStore } from './layout'
 import { useMainStore } from '.'
+import { hasLocalEditsOnly, isDiskChangePrompt } from '../components/sideBar/openedFilesFilter'
 import { t } from '../i18n'
 import { debouncedSendBufferedState, sendBufferedState } from './bufferedState'
 import type {
@@ -145,6 +146,11 @@ export interface EditorState {
 }
 
 const autoSaveTimers = new Map<string, ReturnType<typeof setTimeout>>()
+
+const toSavePayload = (file: IFileState, defaultPath: string | undefined) => {
+  const { id, filename, pathname, markdown } = file
+  return { id, filename, pathname, markdown, options: getOptionsFromState(file), defaultPath }
+}
 
 export const useEditorStore = defineStore('editor', {
   state: (): EditorState => ({
@@ -689,23 +695,37 @@ export const useEditorStore = defineStore('editor', {
       })
     },
 
+    // Accepts every pending "changed on disk" prompt at once, as if OK were
+    // clicked on each. Tabs holding only local edits have no prompt and are
+    // left alone.
+    RELOAD_TABS_CHANGED_ON_DISK(): void {
+      for (const tab of this.tabs) {
+        const index = tab.notifications.findIndex(isDiskChangePrompt)
+        if (index === -1) continue
+        const [prompt] = tab.notifications.splice(index, 1)
+        prompt.action(true)
+      }
+    },
+
+    // Unlike ASK_FOR_SAVE_ALL, skips tabs with a pending changed-on-disk
+    // prompt so their stale buffer never overwrites the newer file.
+    SAVE_TABS_WITH_LOCAL_EDITS(): void {
+      const defaultPath = getRootFolderFromState(useProjectStore())
+      const files = this.tabs
+        .filter(hasLocalEditsOnly)
+        .map((file) => toSavePayload(file, defaultPath))
+      if (files.length) {
+        window.electron.ipcRenderer.send('mt::save-tabs', deepClone(files))
+      }
+    },
+
     ASK_FOR_SAVE_ALL(closeTabs: boolean): void {
       const { tabs } = this
       const projectStore = useProjectStore()
+      const defaultPath = getRootFolderFromState(projectStore)
       const unsavedFiles = tabs
         .filter((file) => !(file.isSaved && /[^\n]/.test(file.markdown)))
-        .map((file) => {
-          const { id, filename, pathname, markdown } = file
-          const options = getOptionsFromState(file)
-          return {
-            id,
-            filename,
-            pathname,
-            markdown,
-            options,
-            defaultPath: getRootFolderFromState(projectStore)
-          }
-        })
+        .map((file) => toSavePayload(file, defaultPath))
 
       if (closeTabs) {
         if (unsavedFiles.length) {

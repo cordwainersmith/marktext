@@ -248,7 +248,9 @@
       "collapseAll": "Contraer todo"
     },
     "openedFiles": {
-      "searchPlaceholder": "Buscar en archivos abiertos"
+      "searchPlaceholder": "Buscar en archivos abiertos",
+      "reloadChanged": "Recargar {count} archivos modificados en el disco",
+      "saveEdited": "Guardar {count} archivos con cambios sin guardar"
     },
     "icons": {
       "files": "Archivos",

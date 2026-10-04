@@ -248,7 +248,9 @@
       "collapseAll": "Tümünü daralt"
     },
     "openedFiles": {
-      "searchPlaceholder": "Açık dosyalarda ara"
+      "searchPlaceholder": "Açık dosyalarda ara",
+      "reloadChanged": "Diskte değişen {count} dosyayı yeniden yükle",
+      "saveEdited": "Kaydedilmemiş değişiklikleri olan {count} dosyayı kaydet"
     },
     "icons": {
       "files": "Dosyalar",

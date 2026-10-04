@@ -1,3 +1,4 @@
+import type { FileNotification } from '@shared/types/files'
 import type { TabDescriptor } from './types'
 
 export interface OpenedFileMatch {
@@ -54,3 +55,15 @@ export const folderLabel = (pathname: string | null, home: string | undefined): 
   if (dir === homeDir || dir.startsWith(`${homeDir}/`)) return `~${dir.slice(homeDir.length)}`
   return dir
 }
+
+// The confirmable prompt LISTEN_FOR_FILE_CHANGE pushes when a tab's file
+// changes on disk. The "removed on disk" warning shares the exclusive type but
+// has nothing to confirm.
+export const isDiskChangePrompt = (notification: FileNotification): boolean =>
+  notification.exclusiveType === 'file_changed' && notification.showConfirm
+
+export const countTabsChangedOnDisk = (tabs: TabDescriptor[]): number =>
+  tabs.filter((tab) => tab.notifications.some(isDiskChangePrompt)).length
+
+export const hasLocalEditsOnly = (tab: TabDescriptor): boolean =>
+  !tab.isSaved && !tab.notifications.some(isDiskChangePrompt)

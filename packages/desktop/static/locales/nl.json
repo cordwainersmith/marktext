@@ -248,7 +248,9 @@
       "collapseAll": "Alles inklappen"
     },
     "openedFiles": {
-      "searchPlaceholder": "Zoeken in geopende bestanden"
+      "searchPlaceholder": "Zoeken in geopende bestanden",
+      "reloadChanged": "{count} op schijf gewijzigde bestanden opnieuw laden",
+      "saveEdited": "{count} bestanden met niet-opgeslagen wijzigingen opslaan"
     },
     "icons": {
       "files": "Bestanden",

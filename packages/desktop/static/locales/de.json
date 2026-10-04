@@ -248,7 +248,9 @@
       "collapseAll": "Alle einklappen"
     },
     "openedFiles": {
-      "searchPlaceholder": "Geöffnete Dateien durchsuchen"
+      "searchPlaceholder": "Geöffnete Dateien durchsuchen",
+      "reloadChanged": "{count} auf der Festplatte geänderte Dateien neu laden",
+      "saveEdited": "{count} Dateien mit ungespeicherten Änderungen speichern"
     },
     "icons": {
       "files": "Dateien",

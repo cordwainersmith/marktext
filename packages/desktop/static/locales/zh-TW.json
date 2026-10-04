@@ -248,7 +248,9 @@
       "collapseAll": "全部折疊"
     },
     "openedFiles": {
-      "searchPlaceholder": "搜尋已開啟的檔案"
+      "searchPlaceholder": "搜尋已開啟的檔案",
+      "reloadChanged": "重新載入磁碟上已變更的 {count} 個檔案",
+      "saveEdited": "儲存 {count} 個有未儲存變更的檔案"
     },
     "icons": {
       "files": "檔案",

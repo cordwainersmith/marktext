@@ -11,9 +11,21 @@
     <div class="title">
       <span class="text-overflow">{{ t('sideBar.tree.openedFiles') }}</span>
       <a
+        v-if="changedOnDisk"
         href="javascript:;"
-        :title="t('sideBar.tree.saveAll')"
-        @click.stop="editorStore.ASK_FOR_SAVE_ALL(false)"
+        class="badge-action"
+        :title="t('sideBar.openedFiles.reloadChanged', { count: changedOnDisk })"
+        @click.stop="editorStore.RELOAD_TABS_CHANGED_ON_DISK()"
+      >
+        <el-icon><Refresh /></el-icon>
+        {{ changedOnDisk }}
+      </a>
+      <a
+        v-if="locallyEdited"
+        href="javascript:;"
+        class="badge-action"
+        :title="t('sideBar.openedFiles.saveEdited', { count: locallyEdited })"
+        @click.stop="editorStore.SAVE_TABS_WITH_LOCAL_EDITS()"
       >
         <svg
           class="icon"
@@ -21,6 +33,7 @@
         >
           <use xlink:href="#icon-save-all" />
         </svg>
+        {{ locallyEdited }}
       </a>
       <a
         href="javascript:;"
@@ -69,7 +82,13 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useEditorStore } from '@/store/editor'
 import OpenedFile from './treeOpenedTab.vue'
-import { filterOpenedFiles, folderLabel } from './openedFilesFilter'
+import { Refresh } from '@element-plus/icons-vue'
+import {
+  countTabsChangedOnDisk,
+  filterOpenedFiles,
+  folderLabel,
+  hasLocalEditsOnly
+} from './openedFilesFilter'
 
 const { t } = useI18n()
 const editorStore = useEditorStore()
@@ -77,6 +96,8 @@ const { tabs } = storeToRefs(editorStore)
 
 const home = window.electron.process.env.HOME
 const query = ref('')
+const locallyEdited = computed(() => tabs.value.filter(hasLocalEditsOnly).length)
+const changedOnDisk = computed(() => countTabsChangedOnDisk(tabs.value))
 const matches = computed(() => filterOpenedFiles(tabs.value, query.value))
 </script>
 
@@ -134,6 +155,15 @@ const matches = computed(() => filterOpenedFiles(tabs.value, query.value))
 
 .title:hover > a {
   display: block;
+}
+
+/* Always shown, unlike the hover-only actions, since they carry a count. */
+.title > a.badge-action {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--highlightThemeColor);
 }
 
 .title > a:hover {

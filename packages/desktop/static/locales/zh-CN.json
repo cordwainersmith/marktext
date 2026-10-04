@@ -248,7 +248,9 @@
       "collapseAll": "全部折叠"
     },
     "openedFiles": {
-      "searchPlaceholder": "搜索已打开的文件"
+      "searchPlaceholder": "搜索已打开的文件",
+      "reloadChanged": "重新加载磁盘上已更改的 {count} 个文件",
+      "saveEdited": "保存 {count} 个有未保存更改的文件"
     },
     "icons": {
       "files": "文件",

@@ -1,6 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import type { IFileState } from '@shared/types/files'
-import { filterOpenedFiles, folderLabel } from '@/components/sideBar/openedFilesFilter'
+import type { FileNotification, IFileState } from '@shared/types/files'
+import {
+  countTabsChangedOnDisk,
+  filterOpenedFiles,
+  folderLabel,
+  hasLocalEditsOnly
+} from '@/components/sideBar/openedFilesFilter'
 
 const tab = (filename: string, markdown: string): IFileState =>
   ({ id: filename, filename, markdown }) as IFileState
@@ -61,5 +66,35 @@ describe('folderLabel', () => {
 
   it('is empty for untitled buffers', () => {
     expect(folderLabel(null, home)).toBe('')
+  })
+})
+
+describe('countTabsChangedOnDisk', () => {
+  const withNotifications = (notifications: Partial<FileNotification>[]): IFileState =>
+    ({ notifications }) as IFileState
+
+  it('counts only tabs with a confirmable changed-on-disk prompt', () => {
+    const tabs = [
+      withNotifications([{ exclusiveType: 'file_changed', showConfirm: true }]),
+      withNotifications([{ exclusiveType: 'file_changed', showConfirm: false }]),
+      withNotifications([{ exclusiveType: '', showConfirm: true }]),
+      withNotifications([])
+    ]
+    expect(countTabsChangedOnDisk(tabs)).toBe(1)
+  })
+})
+
+describe('hasLocalEditsOnly', () => {
+  const state = (isSaved: boolean, notifications: Partial<FileNotification>[] = []): IFileState =>
+    ({ isSaved, notifications }) as IFileState
+
+  it('is true for unsaved tabs without a pending disk change', () => {
+    expect(hasLocalEditsOnly(state(false))).toBe(true)
+    expect(hasLocalEditsOnly(state(false, [{ exclusiveType: 'file_changed', showConfirm: false }]))).toBe(true)
+  })
+
+  it('is false for saved tabs and tabs whose file changed on disk', () => {
+    expect(hasLocalEditsOnly(state(true))).toBe(false)
+    expect(hasLocalEditsOnly(state(false, [{ exclusiveType: 'file_changed', showConfirm: true }]))).toBe(false)
   })
 })

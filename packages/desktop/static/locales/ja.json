@@ -248,7 +248,9 @@
       "collapseAll": "すべて折りたたむ"
     },
     "openedFiles": {
-      "searchPlaceholder": "開いているファイルを検索"
+      "searchPlaceholder": "開いているファイルを検索",
+      "reloadChanged": "ディスク上で変更された {count} 個のファイルを再読み込み",
+      "saveEdited": "未保存の変更がある {count} 個のファイルを保存"
     },
     "icons": {
       "files": "ファイル",

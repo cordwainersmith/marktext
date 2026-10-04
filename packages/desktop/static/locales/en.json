@@ -248,7 +248,9 @@
       "collapseAll": "Collapse all"
     },
     "openedFiles": {
-      "searchPlaceholder": "Search open files"
+      "searchPlaceholder": "Search open files",
+      "reloadChanged": "Reload {count} files changed on disk",
+      "saveEdited": "Save {count} files with unsaved edits"
     },
     "icons": {
       "files": "Files",
