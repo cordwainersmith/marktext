@@ -41,11 +41,12 @@
       v-model="showDiff"
       :title="t('editor.notifications.diffTitle', { name: currentFile?.filename ?? '' })"
       width="80%"
+      class="disk-diff-dialog"
       append-to-body
     >
       <div class="diff-legend">
-        <span class="removed">− {{ t('editor.notifications.diffInMarkText') }}</span>
-        <span class="added">+ {{ t('editor.notifications.diffOnDisk') }}</span>
+        <span><span class="removed">−</span> {{ t('editor.notifications.diffInMarkText') }}</span>
+        <span><span class="added">+</span> {{ t('editor.notifications.diffOnDisk') }}</span>
       </div>
       <div class="diff-view">
         <template
@@ -191,43 +192,61 @@ const handleClick = (status: boolean) => {
   gap: 16px;
   margin-bottom: 8px;
   font-size: 12px;
+  color: var(--floatFontColor);
   & .removed {
-    color: var(--el-color-danger);
+    color: #f85149;
   }
   & .added {
-    color: var(--el-color-success);
+    color: #3fb950;
   }
 }
+/* The editor's own colors, so text contrast holds in every theme. */
 .diff-view {
   max-height: 60vh;
   overflow: auto;
+  padding: 6px 0;
+  border-radius: 4px;
+  border: 1px solid var(--floatBorderColor);
+  background: var(--editorBgColor);
+  color: var(--editorColor);
   font-family: var(--codeFontFamily, monospace);
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 13px;
+  line-height: 20px;
   user-select: text;
 }
 .diff-line {
   white-space: pre-wrap;
   word-break: break-word;
-  padding: 0 8px;
+  padding: 0 10px;
+  border-left: 3px solid transparent;
   &.removed {
-    background: rgba(245, 108, 108, 0.15);
+    background: rgba(248, 81, 73, 0.18);
+    border-left-color: #f85149;
   }
   &.removed::before {
     content: '− ';
+    color: #f85149;
   }
   &.added {
-    background: rgba(103, 194, 58, 0.15);
+    background: rgba(63, 185, 80, 0.18);
+    border-left-color: #3fb950;
   }
   &.added::before {
     content: '+ ';
+    color: #3fb950;
   }
   &.same::before {
     content: '  ';
   }
   &.skipped {
-    opacity: 0.6;
+    color: var(--editorColor50);
     font-style: italic;
   }
+}
+</style>
+
+<style>
+.disk-diff-dialog .el-dialog__title {
+  color: var(--floatFontColor);
 }
 </style>
