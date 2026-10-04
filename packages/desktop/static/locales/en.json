@@ -251,7 +251,14 @@
       "files": "Files",
       "search": "Search",
       "toc": "Table of Contents",
+      "wikiInbox": "Drop into llm-wiki inbox",
       "settings": "Settings"
+    },
+    "wikiInbox": {
+      "noFile": "No file is open.",
+      "dropped": "Dropped into {pathname}. Run an ingest to compile it.",
+      "duplicate": "Already waiting in the inbox as {pathname}.",
+      "failed": "Could not drop into the inbox: {error}"
     }
   },
   "commandPalette": {

@@ -251,7 +251,14 @@
       "files": "ファイル",
       "search": "検索",
       "toc": "目次",
+      "wikiInbox": "llm-wiki の受信トレイに送る",
       "settings": "設定"
+    },
+    "wikiInbox": {
+      "noFile": "ファイルが開かれていません。",
+      "dropped": "{pathname} に保存しました。コンパイルするには ingest を実行してください。",
+      "duplicate": "すでに {pathname} として受信トレイにあります。",
+      "failed": "受信トレイに保存できませんでした: {error}"
     }
   },
   "commandPalette": {

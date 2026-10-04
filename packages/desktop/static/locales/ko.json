@@ -251,7 +251,14 @@
       "files": "파일",
       "search": "검색",
       "toc": "목차",
+      "wikiInbox": "llm-wiki 수신함으로 보내기",
       "settings": "설정"
+    },
+    "wikiInbox": {
+      "noFile": "열려 있는 파일이 없습니다.",
+      "dropped": "{pathname}에 저장했습니다. 컴파일하려면 ingest를 실행하세요.",
+      "duplicate": "이미 {pathname}(으)로 수신함에 있습니다.",
+      "failed": "수신함에 저장하지 못했습니다: {error}"
     }
   },
   "commandPalette": {

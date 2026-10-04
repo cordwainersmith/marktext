@@ -251,7 +251,14 @@
       "files": "Dateien",
       "search": "Suchen",
       "toc": "Inhaltsverzeichnis",
+      "wikiInbox": "In llm-wiki-Posteingang ablegen",
       "settings": "Einstellungen"
+    },
+    "wikiInbox": {
+      "noFile": "Keine Datei geöffnet.",
+      "dropped": "In {pathname} abgelegt. Führen Sie einen Ingest aus, um sie zu kompilieren.",
+      "duplicate": "Wartet bereits als {pathname} im Posteingang.",
+      "failed": "Ablegen im Posteingang fehlgeschlagen: {error}"
     }
   },
   "commandPalette": {

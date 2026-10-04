@@ -251,7 +251,14 @@
       "files": "檔案",
       "search": "搜尋",
       "toc": "目錄",
+      "wikiInbox": "放入 llm-wiki 收件匣",
       "settings": "設定"
+    },
+    "wikiInbox": {
+      "noFile": "沒有開啟的檔案。",
+      "dropped": "已放入 {pathname}。執行 ingest 以編譯它。",
+      "duplicate": "已在收件匣中，檔名為 {pathname}。",
+      "failed": "無法放入收件匣：{error}"
     }
   },
   "commandPalette": {

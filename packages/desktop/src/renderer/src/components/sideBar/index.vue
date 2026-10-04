@@ -58,6 +58,9 @@ import Tree from './tree.vue'
 import SideBarSearch from './search.vue'
 import Toc from './toc.vue'
 import { storeToRefs } from 'pinia'
+import { t } from '@/i18n'
+import notice from '@/services/notification'
+import { dropIntoWikiInbox } from '@/services/wikiInbox'
 import type { TabDescriptor } from './types'
 
 const layoutStore = useLayoutStore()
@@ -132,9 +135,38 @@ const handleLeftIconClick = (name: string): void => {
   }
 }
 
-const handleLeftBottomClick = (name: string): void => {
+const dropToWikiInbox = async (): Promise<void> => {
+  const title = t('sideBar.icons.wikiInbox')
+  const file = editorStore.currentFile
+  if (!file) {
+    notice.notify({ title, message: t('sideBar.wikiInbox.noFile'), type: 'warning' })
+    return
+  }
+
+  try {
+    const { status, pathname } = await dropIntoWikiInbox(file)
+    notice.notify({
+      title,
+      message: t(
+        status === 'written' ? 'sideBar.wikiInbox.dropped' : 'sideBar.wikiInbox.duplicate',
+        { pathname }
+      ),
+      type: status === 'written' ? 'primary' : 'info'
+    })
+  } catch (error) {
+    notice.notify({
+      title,
+      message: t('sideBar.wikiInbox.failed', { error: (error as Error).message }),
+      type: 'error'
+    })
+  }
+}
+
+const handleLeftBottomClick = async (name: string): Promise<void> => {
   if (name === 'settings') {
     projectStore.OPEN_SETTING_WINDOW()
+  } else if (name === 'wikiInbox') {
+    await dropToWikiInbox()
   }
 }
 </script>

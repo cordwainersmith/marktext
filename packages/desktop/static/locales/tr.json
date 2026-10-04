@@ -251,7 +251,14 @@
       "files": "Dosyalar",
       "search": "Ara",
       "toc": "İçindekiler",
+      "wikiInbox": "llm-wiki gelen kutusuna bırak",
       "settings": "Ayarlar"
+    },
+    "wikiInbox": {
+      "noFile": "Açık dosya yok.",
+      "dropped": "{pathname} konumuna bırakıldı. Derlemek için bir ingest çalıştırın.",
+      "duplicate": "Gelen kutusunda {pathname} olarak zaten bekliyor.",
+      "failed": "Gelen kutusuna bırakılamadı: {error}"
     }
   },
   "commandPalette": {

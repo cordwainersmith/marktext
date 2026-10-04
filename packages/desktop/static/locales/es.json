@@ -251,7 +251,14 @@
       "files": "Archivos",
       "search": "Buscar",
       "toc": "Tabla de Contenidos",
+      "wikiInbox": "Enviar a la bandeja de entrada de llm-wiki",
       "settings": "Configuración"
+    },
+    "wikiInbox": {
+      "noFile": "No hay ningún archivo abierto.",
+      "dropped": "Enviado a {pathname}. Ejecute un ingest para compilarlo.",
+      "duplicate": "Ya está en la bandeja de entrada como {pathname}.",
+      "failed": "No se pudo enviar a la bandeja de entrada: {error}"
     }
   },
   "commandPalette": {

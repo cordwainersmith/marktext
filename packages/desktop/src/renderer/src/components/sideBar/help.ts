@@ -2,6 +2,7 @@ import {
   Folder as FilesIcon,
   Search as SearchIcon,
   Memo as TocIcon,
+  Promotion as WikiInboxIcon,
   Setting as SettingIcon
 } from '@element-plus/icons-vue'
 import { t } from '@/i18n'
@@ -31,6 +32,11 @@ export const sideBarIcons: SideBarIconEntry[] = [
 ]
 
 export const sideBarBottomIcons: SideBarIconEntry[] = [
+  {
+    id: 'wikiInbox',
+    name: () => t('sideBar.icons.wikiInbox'),
+    icon: WikiInboxIcon
+  },
   {
     id: 'settings',
     name: () => t('sideBar.icons.settings'),

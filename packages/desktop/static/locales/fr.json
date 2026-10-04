@@ -251,7 +251,14 @@
       "files": "Fichiers",
       "search": "Rechercher",
       "toc": "Table des matières",
+      "wikiInbox": "Déposer dans la boîte de réception llm-wiki",
       "settings": "Paramètres"
+    },
+    "wikiInbox": {
+      "noFile": "Aucun fichier ouvert.",
+      "dropped": "Déposé dans {pathname}. Lancez un ingest pour le compiler.",
+      "duplicate": "Déjà en attente dans la boîte de réception sous {pathname}.",
+      "failed": "Impossible de déposer dans la boîte de réception : {error}"
     }
   },
   "commandPalette": {

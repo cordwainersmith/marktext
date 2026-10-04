@@ -251,7 +251,14 @@
       "files": "Bestanden",
       "search": "Zoeken",
       "toc": "Inhoudsopgave",
+      "wikiInbox": "Naar llm-wiki-postvak IN sturen",
       "settings": "Instellingen"
+    },
+    "wikiInbox": {
+      "noFile": "Er is geen bestand geopend.",
+      "dropped": "Naar {pathname} geplaatst. Voer een ingest uit om het te compileren.",
+      "duplicate": "Staat al in het postvak IN als {pathname}.",
+      "failed": "Kan niet naar het postvak IN plaatsen: {error}"
     }
   },
   "commandPalette": {
