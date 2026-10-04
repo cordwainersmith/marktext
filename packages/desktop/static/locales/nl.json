@@ -250,7 +250,11 @@
     "openedFiles": {
       "searchPlaceholder": "Zoeken in geopende bestanden",
       "reloadChanged": "{count} op schijf gewijzigde bestanden opnieuw laden",
-      "saveEdited": "{count} bestanden met niet-opgeslagen wijzigingen opslaan"
+      "saveEdited": "{count} bestanden met niet-opgeslagen wijzigingen opslaan",
+      "showUnsaved": "Niet-opgeslagen wijzigingen tonen",
+      "unsavedTitle": "Niet-opgeslagen wijzigingen: {name}",
+      "diffSaved": "Opgeslagen",
+      "diffUnsaved": "Niet opgeslagen"
     },
     "icons": {
       "files": "Bestanden",

@@ -17,19 +17,36 @@
       v-if="folder"
       class="folder"
     >{{ folder }}</span>
+    <el-tooltip
+      v-if="diffTooltip"
+      :content="diffTooltip"
+      placement="bottom"
+    >
+      <el-icon
+        class="diff-icon"
+        :size="14"
+        @click.stop="emit('show-diff')"
+      >
+        <View />
+      </el-icon>
+    </el-tooltip>
   </div>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useEditorStore } from '@/store/editor'
-import { Close } from '@element-plus/icons-vue'
+import { Close, View } from '@element-plus/icons-vue'
 import type { TabDescriptor } from './types'
 
 defineProps<{
   file: TabDescriptor
   folder?: string
+  // Shows a hover button that emits show-diff, with this as its tooltip.
+  diffTooltip?: string
 }>()
+
+const emit = defineEmits<{ 'show-diff': [] }>()
 
 const editorStore = useEditorStore()
 
@@ -69,6 +86,19 @@ const removeFileInTab = (file: TabDescriptor): void => {
   }
   &:hover > .close-icon {
     display: inline-flex;
+  }
+  & > .diff-icon {
+    display: none;
+    flex-shrink: 0;
+    margin: 0 12px 0 auto;
+    align-self: center;
+    cursor: pointer;
+  }
+  &:hover > .diff-icon {
+    display: inline-flex;
+  }
+  & > .diff-icon:hover {
+    color: var(--highlightThemeColor);
   }
   &:hover {
     background: var(--sideBarItemHoverBgColor);

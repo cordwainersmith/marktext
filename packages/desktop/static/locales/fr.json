@@ -250,7 +250,11 @@
     "openedFiles": {
       "searchPlaceholder": "Rechercher dans les fichiers ouverts",
       "reloadChanged": "Recharger {count} fichiers modifiés sur le disque",
-      "saveEdited": "Enregistrer {count} fichiers avec des modifications non enregistrées"
+      "saveEdited": "Enregistrer {count} fichiers avec des modifications non enregistrées",
+      "showUnsaved": "Voir les modifications non enregistrées",
+      "unsavedTitle": "Modifications non enregistrées : {name}",
+      "diffSaved": "Enregistré",
+      "diffUnsaved": "Non enregistré"
     },
     "icons": {
       "files": "Fichiers",

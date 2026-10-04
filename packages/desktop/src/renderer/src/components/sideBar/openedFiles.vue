@@ -64,6 +64,10 @@
         <opened-file
           :file="tab"
           :folder="folderLabel(tab.pathname, home)"
+          :diff-tooltip="
+            tab.pathname && hasLocalEditsOnly(tab) ? t('sideBar.openedFiles.showUnsaved') : undefined
+          "
+          @show-diff="showUnsavedDiff(tab)"
         />
         <div
           v-if="snippet"
@@ -81,6 +85,14 @@
         {{ t('sideBar.search.noResultsFound') }}
       </div>
     </div>
+    <diff-dialog
+      v-model="diffOpen"
+      :title="t('sideBar.openedFiles.unsavedTitle', { name: diffTab?.filename ?? '' })"
+      :before="savedMarkdown"
+      :after="diffTab?.markdown ?? ''"
+      :before-label="t('sideBar.openedFiles.diffSaved')"
+      :after-label="t('sideBar.openedFiles.diffUnsaved')"
+    />
   </div>
 </template>
 
@@ -90,6 +102,8 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useEditorStore } from '@/store/editor'
 import OpenedFile from './treeOpenedTab.vue'
+import DiffDialog from '../diffDialog/index.vue'
+import type { TabDescriptor } from './types'
 import { Refresh } from '@element-plus/icons-vue'
 import {
   countTabsChangedOnDisk,
@@ -104,6 +118,24 @@ const { tabs } = storeToRefs(editorStore)
 
 const home = window.electron.process.env.HOME
 const query = ref('')
+const diffOpen = ref(false)
+const diffTab = ref<TabDescriptor | null>(null)
+const savedMarkdown = ref('')
+
+const showUnsavedDiff = async (tab: TabDescriptor): Promise<void> => {
+  if (!tab.pathname) return
+  try {
+    const raw = await window.fileUtils.readFile(tab.pathname, 'utf8')
+    // The buffer always holds LF line endings, whatever the file uses.
+    savedMarkdown.value = String(raw).replace(/\r\n?/g, '\n')
+  } catch {
+    // A file deleted from disk has nothing saved, so all of the buffer is pending.
+    savedMarkdown.value = ''
+  }
+  diffTab.value = tab
+  diffOpen.value = true
+}
+
 const locallyEdited = computed(() => tabs.value.filter(hasLocalEditsOnly).length)
 const changedOnDisk = computed(() => countTabsChangedOnDisk(tabs.value))
 const matches = computed(() => filterOpenedFiles(tabs.value, query.value))

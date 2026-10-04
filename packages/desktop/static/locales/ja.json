@@ -250,7 +250,11 @@
     "openedFiles": {
       "searchPlaceholder": "開いているファイルを検索",
       "reloadChanged": "ディスク上で変更された {count} 個のファイルを再読み込み",
-      "saveEdited": "未保存の変更がある {count} 個のファイルを保存"
+      "saveEdited": "未保存の変更がある {count} 個のファイルを保存",
+      "showUnsaved": "未保存の変更を表示",
+      "unsavedTitle": "未保存の変更: {name}",
+      "diffSaved": "保存済み",
+      "diffUnsaved": "未保存"
     },
     "icons": {
       "files": "ファイル",

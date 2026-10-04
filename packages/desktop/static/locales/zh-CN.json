@@ -250,7 +250,11 @@
     "openedFiles": {
       "searchPlaceholder": "搜索已打开的文件",
       "reloadChanged": "重新加载磁盘上已更改的 {count} 个文件",
-      "saveEdited": "保存 {count} 个有未保存更改的文件"
+      "saveEdited": "保存 {count} 个有未保存更改的文件",
+      "showUnsaved": "显示未保存的更改",
+      "unsavedTitle": "未保存的更改：{name}",
+      "diffSaved": "已保存",
+      "diffUnsaved": "未保存"
     },
     "icons": {
       "files": "文件",

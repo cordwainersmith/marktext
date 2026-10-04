@@ -250,7 +250,11 @@
     "openedFiles": {
       "searchPlaceholder": "Pesquisar arquivos abertos",
       "reloadChanged": "Recarregar {count} arquivos alterados no disco",
-      "saveEdited": "Salvar {count} arquivos com alterações não salvas"
+      "saveEdited": "Salvar {count} arquivos com alterações não salvas",
+      "showUnsaved": "Ver alterações não salvas",
+      "unsavedTitle": "Alterações não salvas: {name}",
+      "diffSaved": "Salvo",
+      "diffUnsaved": "Não salvo"
     },
     "icons": {
       "files": "Arquivos",

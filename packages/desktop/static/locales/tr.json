@@ -250,7 +250,11 @@
     "openedFiles": {
       "searchPlaceholder": "Açık dosyalarda ara",
       "reloadChanged": "Diskte değişen {count} dosyayı yeniden yükle",
-      "saveEdited": "Kaydedilmemiş değişiklikleri olan {count} dosyayı kaydet"
+      "saveEdited": "Kaydedilmemiş değişiklikleri olan {count} dosyayı kaydet",
+      "showUnsaved": "Kaydedilmemiş değişiklikleri göster",
+      "unsavedTitle": "Kaydedilmemiş değişiklikler: {name}",
+      "diffSaved": "Kaydedildi",
+      "diffUnsaved": "Kaydedilmedi"
     },
     "icons": {
       "files": "Dosyalar",

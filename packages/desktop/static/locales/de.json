@@ -250,7 +250,11 @@
     "openedFiles": {
       "searchPlaceholder": "Geöffnete Dateien durchsuchen",
       "reloadChanged": "{count} auf der Festplatte geänderte Dateien neu laden",
-      "saveEdited": "{count} Dateien mit ungespeicherten Änderungen speichern"
+      "saveEdited": "{count} Dateien mit ungespeicherten Änderungen speichern",
+      "showUnsaved": "Ungespeicherte Änderungen anzeigen",
+      "unsavedTitle": "Ungespeicherte Änderungen: {name}",
+      "diffSaved": "Gespeichert",
+      "diffUnsaved": "Ungespeichert"
     },
     "icons": {
       "files": "Dateien",

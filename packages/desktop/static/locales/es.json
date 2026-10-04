@@ -250,7 +250,11 @@
     "openedFiles": {
       "searchPlaceholder": "Buscar en archivos abiertos",
       "reloadChanged": "Recargar {count} archivos modificados en el disco",
-      "saveEdited": "Guardar {count} archivos con cambios sin guardar"
+      "saveEdited": "Guardar {count} archivos con cambios sin guardar",
+      "showUnsaved": "Ver cambios sin guardar",
+      "unsavedTitle": "Cambios sin guardar: {name}",
+      "diffSaved": "Guardado",
+      "diffUnsaved": "Sin guardar"
     },
     "icons": {
       "files": "Archivos",

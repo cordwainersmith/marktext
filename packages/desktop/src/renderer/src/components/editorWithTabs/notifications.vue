@@ -37,46 +37,16 @@
         </span>
       </div>
     </div>
-    <el-dialog
+    <diff-dialog
       v-model="showDiff"
       :title="t('editor.notifications.diffTitle', { name: currentFile?.filename ?? '' })"
-      width="80%"
-      class="disk-diff-dialog"
-      append-to-body
-    >
-      <div class="diff-legend">
-        <span><span class="removed">−</span> {{ t('editor.notifications.diffInMarkText') }}</span>
-        <span><span class="added">+</span> {{ t('editor.notifications.diffOnDisk') }}</span>
-      </div>
-      <div class="diff-view">
-        <template
-          v-for="(line, index) of diff"
-          :key="index"
-        >
-          <div
-            v-if="line.type === 'skipped'"
-            class="diff-line skipped"
-          >
-            {{ t('editor.notifications.diffUnchangedLines', { count: line.count }) }}
-          </div>
-          <div
-            v-else
-            class="diff-line"
-            :class="line.type"
-          >
-            {{ line.text || ' ' }}
-          </div>
-        </template>
-      </div>
-      <template #footer>
-        <el-button
-          type="primary"
-          @click="reloadFromDisk"
-        >
-          {{ t('editor.notifications.reloadFromDisk') }}
-        </el-button>
-      </template>
-    </el-dialog>
+      :before="currentFile?.markdown ?? ''"
+      :after="currentNotification.diskMarkdown ?? ''"
+      :before-label="t('editor.notifications.diffInMarkText')"
+      :after-label="t('editor.notifications.diffOnDisk')"
+      :action-label="t('editor.notifications.reloadFromDisk')"
+      @action="reloadFromDisk"
+    />
   </div>
 </template>
 
@@ -87,7 +57,7 @@ import { useLayoutStore } from '@/store/layout'
 import { storeToRefs } from 'pinia'
 import { Close } from '@element-plus/icons-vue'
 import { t } from '../../i18n'
-import { collapseUnchanged, diffLines } from '@/util/lineDiff'
+import DiffDialog from '../diffDialog/index.vue'
 
 const editorStore = useEditorStore()
 const layoutStore = useLayoutStore()
@@ -104,13 +74,6 @@ const currentNotification = computed(() => {
 })
 
 const showDiff = ref(false)
-
-// Computed only while the dialog is open, since the buffer changes per keystroke.
-const diff = computed(() => {
-  const diskMarkdown = currentNotification.value?.diskMarkdown
-  if (!showDiff.value || diskMarkdown === undefined) return []
-  return collapseUnchanged(diffLines(currentFile.value?.markdown ?? '', diskMarkdown))
-})
 
 const reloadFromDisk = () => {
   showDiff.value = false
@@ -186,67 +149,5 @@ const handleClick = (status: boolean) => {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.6);
   }
-}
-.diff-legend {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 8px;
-  font-size: 12px;
-  color: var(--floatFontColor);
-  & .removed {
-    color: #f85149;
-  }
-  & .added {
-    color: #3fb950;
-  }
-}
-/* The editor's own colors, so text contrast holds in every theme. */
-.diff-view {
-  max-height: 60vh;
-  overflow: auto;
-  padding: 6px 0;
-  border-radius: 4px;
-  border: 1px solid var(--floatBorderColor);
-  background: var(--editorBgColor);
-  color: var(--editorColor);
-  font-family: var(--codeFontFamily, monospace);
-  font-size: 13px;
-  line-height: 20px;
-  user-select: text;
-}
-.diff-line {
-  white-space: pre-wrap;
-  word-break: break-word;
-  padding: 0 10px;
-  border-left: 3px solid transparent;
-  &.removed {
-    background: rgba(248, 81, 73, 0.18);
-    border-left-color: #f85149;
-  }
-  &.removed::before {
-    content: '− ';
-    color: #f85149;
-  }
-  &.added {
-    background: rgba(63, 185, 80, 0.18);
-    border-left-color: #3fb950;
-  }
-  &.added::before {
-    content: '+ ';
-    color: #3fb950;
-  }
-  &.same::before {
-    content: '  ';
-  }
-  &.skipped {
-    color: var(--editorColor50);
-    font-style: italic;
-  }
-}
-</style>
-
-<style>
-.disk-diff-dialog .el-dialog__title {
-  color: var(--floatFontColor);
 }
 </style>

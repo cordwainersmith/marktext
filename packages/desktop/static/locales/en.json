@@ -250,7 +250,11 @@
     "openedFiles": {
       "searchPlaceholder": "Search open files",
       "reloadChanged": "Reload {count} files changed on disk",
-      "saveEdited": "Save {count} files with unsaved edits"
+      "saveEdited": "Save {count} files with unsaved edits",
+      "showUnsaved": "Show unsaved changes",
+      "unsavedTitle": "Unsaved changes: {name}",
+      "diffSaved": "Saved",
+      "diffUnsaved": "Unsaved"
     },
     "icons": {
       "files": "Files",
