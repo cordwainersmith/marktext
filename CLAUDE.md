@@ -14,21 +14,21 @@ MarkText is a WYSIWYG markdown editor built on Electron + Vue 3. It supports Com
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Language | TypeScript 5.9 (strict mode) — `packages/muyajs/` retained as JS via ambient shim |
-| Desktop shell | Electron 42 |
-| Build system | electron-vite 5 |
-| Packaging | electron-builder 26 |
-| Frontend framework | Vue 3 |
-| State management | Pinia 3 |
-| Routing | Vue Router 4 |
-| UI library | Element Plus |
-| Unit tests | Vitest 4 |
-| E2E tests | Playwright |
-| Package manager | pnpm >=10 workspace (`packageManager: pnpm@10.33.4`) |
-| Repo layout | pnpm monorepo — see Directory Structure |
-| Node.js minimum | >=20.19.0 (PR CI: Node 22.21.1 · release CI: Node 24.14.1) |
+| Layer              | Technology                                                                        |
+| ------------------ | --------------------------------------------------------------------------------- |
+| Language           | TypeScript 5.9 (strict mode) — `packages/muyajs/` retained as JS via ambient shim |
+| Desktop shell      | Electron 42                                                                       |
+| Build system       | electron-vite 5                                                                   |
+| Packaging          | electron-builder 26                                                               |
+| Frontend framework | Vue 3                                                                             |
+| State management   | Pinia 3                                                                           |
+| Routing            | Vue Router 4                                                                      |
+| UI library         | Element Plus                                                                      |
+| Unit tests         | Vitest 4                                                                          |
+| E2E tests          | Playwright                                                                        |
+| Package manager    | pnpm >=10 workspace (`packageManager: pnpm@10.33.4`)                              |
+| Repo layout        | pnpm monorepo — see Directory Structure                                           |
+| Node.js minimum    | >=20.19.0 (PR CI: Node 22.21.1 · release CI: Node 24.14.1)                        |
 
 ## Directory Structure
 
@@ -209,6 +209,20 @@ pnpm -C packages/desktop exec playwright test test/e2e/launch.spec.ts
 pnpm -C packages/desktop exec playwright test -g 'partial test name'
 ```
 
+### The unit suite is not green on a clean checkout
+
+Baseline on `develop` is **11 failed files / 4 failed tests**:
+`export-settings-persist.spec.ts`, plus collection errors from several specs that
+transitively import `src/renderer/src/store/layout.ts:45`, which touches
+`localStorage` at module load. Measure a change against that baseline instead of
+expecting zero failures, and record the before/after counts when you touch
+anything broad.
+
+`test/unit/specs/locale-validation.spec.ts` is the strictest gate in the suite:
+it enforces key parity across all 11 locales, `{placeholder}` preservation, and
+no empty leaf values. Adding a key to `en.json` alone fails 10 tests. See
+"Editing locales" below.
+
 ## Code Style
 
 Enforced by ESLint + Prettier. Run `pnpm run lint` and `pnpm run typecheck` before committing.
@@ -281,7 +295,7 @@ See `packages/website/content/docs/dev/IPC.md` for conventions and examples.
 ## Important Build Notes
 
 - **CommonJS vs ESM**: `main` and `preload` compile to CommonJS; `renderer` is ESM-only. Do not use `require()` in renderer code.
-- **Minify locales**: `pnpm run minify-locales` must run before production builds. It is included in `build:win/mac/linux` but not in `dev`.
+- **Minify locales**: `pnpm run minify-locales` must run before production builds. It is included in `build:win/mac/linux` but not in `dev`. Note that "not in dev" does not mean dev ignores the minified files: see "Editing locales" below, because the reverse is the trap.
 - **Native modules**: After changing Electron version, run `pnpm run rebuild-native` (`electron-rebuild -f`).
 - **Hot reload**: The renderer hot-reloads via Vite HMR. `Ctrl+R` in the dev window reloads the renderer and re-runs the preload script. Changes to `main/` source are NOT picked up by a window reload — restart `pnpm run dev` to pick them up.
 - **electron-builder output**: `directories.output` in `packages/desktop/electron-builder.yml` is set to `../../dist` so installers land in the repo-root `dist/` (where CI artifact globs look for them). `out/` from electron-vite stays inside `packages/desktop/`.
@@ -293,7 +307,116 @@ See `packages/website/content/docs/dev/IPC.md` for conventions and examples.
 - **Workspace deps**: muya's own npm runtime deps (`github-markdown-css`, `katex`, `dompurify`, `snabbdom`, …) are declared in `packages/muyajs/package.json` so Node module resolution from `packages/muyajs/lib/*.js` finds them inside the workspace rather than walking out to a parent directory.
 - **Patches**: `patch-package` patches live at `packages/desktop/patches/`. The root `postinstall` calls patch-package with `cwd=packages/desktop` so the path resolves correctly.
 
+## Editing locales
+
+`src/common/i18n.ts` prefers `<lang>.min.json` over the raw file **in development
+too**, falling back to the raw JSON only when the minified one is missing.
+`postinstall` generates the minified files, so immediately after any edit to
+`static/locales/*.json` the app still serves the old strings, in dev and in
+production alike. Regenerate them:
+
+```bash
+./node_modules/.bin/tsx scripts/minify-locales.ts   # or: pnpm run minify-locales
+```
+
+`*.min.json` is gitignored, so a stale minified file never shows up in a diff and
+the symptom is a `t()` call rendering its raw key path. Production bundles only
+the minified files: see the `extraResources` filter
+`!locales/**/!(*.min).json` in `electron-builder.yml`.
+
+A new user-facing string therefore costs four things: the key in all 11 locale
+files, a regenerate, and a run of `locale-validation.spec.ts`.
+
+## Fork-local: the llm-wiki inbox button
+
+This clone carries one feature that is **not upstream and must never be sent to
+marktext/marktext**. The sidebar bottom icon rail has a paper-plane button that
+drops the current tab into a personal knowledge base for later compilation.
+
+| File                                                      | Role                                             |
+| --------------------------------------------------------- | ------------------------------------------------ |
+| `packages/desktop/src/renderer/src/services/wikiInbox.ts` | All of the logic                                 |
+| `.../renderer/src/components/sideBar/help.ts`             | `wikiInbox` entry in `sideBarBottomIcons`        |
+| `.../renderer/src/components/sideBar/index.vue`           | Click handler and notifications                  |
+| `packages/desktop/test/unit/specs/wiki-inbox.spec.ts`     | 8 specs covering the rules below                 |
+| `packages/desktop/static/locales/*.json`                  | `sideBar.icons.wikiInbox`, `sideBar.wikiInbox.*` |
+
+It writes the tab's live buffer, unsaved edits included, to
+`~/projects/llm-wiki/inbox/<name>.md` and notifies with the resulting path. The
+destination is hardcoded on purpose. It is a personal integration, not a
+configurable feature, so do not "improve" it into a preference.
+
+Three behaviors the specs pin down, each there for a reason:
+
+- An untitled buffer (`Untitled-1`) gets `.md` appended, because llm-wiki routes
+  converters on the whole filename.
+- Clicking twice is idempotent. An identical body already sitting in the inbox is
+  reported as a duplicate and nothing is written.
+- A _different_ body under the same name gets a `-1`, `-2` suffix rather than
+  overwriting. The inbox may hold drops that have not been ingested yet, and
+  clobbering one loses work silently.
+
+It adds **no IPC channel and no subprocess**, going through the existing
+`window.fileUtils.outputFile` bridge, so the sandbox surface is unchanged. A
+variant that also ran `uv run wiki-ingest` was considered and rejected: it would
+need a main-process `child_process` handler, which is a real new security
+surface in a `sandbox: true` renderer for a pipeline that takes minutes and calls
+an LLM.
+
+## Running and packaging this clone on macOS
+
+Neither `pnpm` nor `corepack` is installed on this machine, so the documented
+`pnpm run ...` commands fail with "command not found". Either run the hoisted
+binaries directly (`shamefully-hoist=true` puts everything in the root
+`node_modules/.bin`):
+
+```bash
+cd packages/desktop && ../../node_modules/.bin/electron-vite dev
+```
+
+or install pnpm once at the pinned version:
+
+```bash
+npm i -g pnpm@10.33.4 --registry=https://registry.npmjs.org/
+```
+
+The registry override is not optional. The global npm and uv configuration on
+this machine points at JFrog Artifactory, which returns 401 for public packages.
+A fresh `pnpm install` needs it on both hops:
+
+```bash
+npm_config_registry=https://registry.npmjs.org/ \
+  npx --yes pnpm@10.33.4 install --registry=https://registry.npmjs.org/
+```
+
+### Building a daily-driver app
+
+The machine is Apple Silicon, so build arm64 only rather than the universal
+`build:mac`, which also does an x64 pass you will never run:
+
+```bash
+cd packages/desktop
+PATH="$PWD/../../node_modules/.bin:$PATH" sh -c \
+  'tsx ../../scripts/minify-locales.ts && electron-vite build && electron-builder --mac --arm64 --publish never'
+ditto ../../dist/mac-arm64/marktext.app /Applications/marktext.app
+```
+
+Quit the app first or `ditto` overwrites a running bundle. `electron-rebuild` is
+part of the packaged `build:mac` script but only matters after an Electron
+version bump, so it is left out above to save a few minutes.
+
+electron-builder finds the `Developer ID Application` certificate in the login
+keychain by itself; no env vars, no prompt. `notarize: false`, and that is
+correct for local use: `spctl` reports `rejected, Unnotarized Developer ID`, but
+Gatekeeper only enforces notarization for bundles carrying a quarantine
+attribute, which a locally built app does not have. Install by copying the
+`.app`, not by round-tripping the DMG through a download, and it just runs.
+Moving that DMG to another Mac _will_ be blocked.
+
 ## Contribution
+
+Upstream contribution rules. They do not apply to the fork-local button above,
+which stays in this clone.
 
 - Submit PRs to the **`develop`** branch (not `main`).
 - Reference the related issue in the PR description.
