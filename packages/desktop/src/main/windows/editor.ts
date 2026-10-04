@@ -43,6 +43,8 @@ interface RestoredTab {
 interface RestoredBufferState {
   tabs: RestoredTab[]
   restoreWarnings?: unknown[]
+  // Unsaved tabs whose file differs on disk, with the file as loaded now.
+  diskChanges?: Array<{ tabId: unknown; pathname: string; data: unknown }>
   project?: { rootDirectory?: string }
   [key: string]: unknown
 }
@@ -583,6 +585,8 @@ class EditorWindow extends BaseWindow {
       const { autoGuessEncoding, trimTrailingNewline, autoNormalizeLineEndings } =
         preferences.getAll()
 
+      const diskChanges: NonNullable<RestoredBufferState['diskChanges']> = []
+      bufferState.diskChanges = diskChanges
       const fileOpenRequests: Promise<void>[] = []
       for (const tab of bufferState.tabs) {
         if (!tab.pathname) {
@@ -602,7 +606,13 @@ class EditorWindow extends BaseWindow {
                 // File has changed since it was last opened, if it is not saved, we should NOT override the buffer
                 if (tab.isSaved) {
                   tab.markdown = rawDocument.markdown
+                } else {
+                  // The renderer offers it as a changed-on-disk prompt instead.
+                  diskChanges.push({ tabId: tab.id, pathname: tab.pathname, data: rawDocument })
                 }
+              } else if (!tab.isSaved) {
+                // The buffer matches the file, so there is nothing left to save.
+                tab.isSaved = true
               }
 
               if (!this._openedFiles!.includes(tab.pathname)) {

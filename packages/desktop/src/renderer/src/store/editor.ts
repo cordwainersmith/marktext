@@ -211,6 +211,11 @@ export const useEditorStore = defineStore('editor', {
       window.DIRNAME = currentFile?.pathname ? window.path.dirname(currentFile.pathname) : ''
       this.UPDATE_LINE_ENDING_MENU()
 
+      for (const { tabId, pathname, data } of bufferedEditorState.diskChanges) {
+        const tab = this.tabs.find((t) => t.id === oldIdToNewId[tabId])
+        if (tab) this.pushDiskChangePrompt(tab, { pathname, data })
+      }
+
       for (const warning of bufferedEditorState.restoreWarnings) {
         const restoredTabId = warning.tabId ? oldIdToNewId[warning.tabId] : null
         const tab = restoredTabId
@@ -303,6 +308,21 @@ export const useEditorStore = defineStore('editor', {
         style,
         exclusiveType,
         action
+      })
+    },
+
+    pushDiskChangePrompt(tab: IFileState, change: FileChangePayload): void {
+      tab.isSaved = false
+      this.pushTabNotification({
+        tabId: tab.id,
+        msg: t('store.editor.fileChangedOnDisk', { name: tab.filename }),
+        showConfirm: true,
+        exclusiveType: 'file_changed',
+        action: (status) => {
+          if (status) {
+            this.loadChange(change)
+          }
+        }
       })
     },
 
@@ -1722,18 +1742,7 @@ export const useEditorStore = defineStore('editor', {
                 }
               }
 
-              tab.isSaved = false
-              this.pushTabNotification({
-                tabId: id,
-                msg: t('store.editor.fileChangedOnDisk', { name: filename }),
-                showConfirm: true,
-                exclusiveType: 'file_changed',
-                action: (status) => {
-                  if (status) {
-                    this.loadChange(change as unknown as FileChangePayload)
-                  }
-                }
-              })
+              this.pushDiskChangePrompt(tab, change as unknown as FileChangePayload)
               debouncedSendBufferedState()
               break
             }
@@ -2103,6 +2112,7 @@ interface BufferedEditorState {
   currentFileId: string | null
   tabs: BufferedTabState[]
   restoreWarnings: BufferedRestoreWarning[]
+  diskChanges: Array<FileChangePayload & { tabId: string }>
 }
 
 const createBufferedEditorState = (state: unknown): BufferedEditorState | null => {
@@ -2112,6 +2122,7 @@ const createBufferedEditorState = (state: unknown): BufferedEditorState | null =
       currentFileId?: string
       currentFile?: { id?: string } | null
       restoreWarnings?: unknown
+      diskChanges?: unknown
     }
     | null
     | undefined
@@ -2126,6 +2137,7 @@ const createBufferedEditorState = (state: unknown): BufferedEditorState | null =
       ? (s.restoreWarnings as RestoreWarning[])
         .map(createBufferedRestoreWarning)
         .filter((w): w is BufferedRestoreWarning => w !== null)
-      : []
+      : [],
+    diskChanges: Array.isArray(s.diskChanges) ? s.diskChanges : []
   }
 }
