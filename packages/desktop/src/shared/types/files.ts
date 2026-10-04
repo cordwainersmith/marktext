@@ -100,6 +100,8 @@ export interface FileNotification {
   style: string
   exclusiveType: string
   action: (status?: unknown) => void
+  // Set on changed-on-disk prompts so the buffer can be diffed against it.
+  diskMarkdown?: string
 }
 
 export type ITab = IFileState

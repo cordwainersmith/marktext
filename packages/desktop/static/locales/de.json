@@ -965,7 +965,13 @@
       "columns": "Spalten"
     },
     "notifications": {
-      "notificationNotFound": "Benachrichtigung nicht gefunden"
+      "notificationNotFound": "Benachrichtigung nicht gefunden",
+      "showDiff": "Unterschiede anzeigen",
+      "diffTitle": "Änderungen auf der Festplatte: {name}",
+      "diffInMarkText": "In MarkText",
+      "diffOnDisk": "Auf der Festplatte",
+      "diffUnchangedLines": "{count} unveränderte Zeilen",
+      "reloadFromDisk": "Von der Festplatte neu laden"
     },
     "print": {
       "error": "Druckfehler für \"{title}\"",

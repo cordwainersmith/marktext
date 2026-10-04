@@ -965,7 +965,13 @@
       "columns": "列"
     },
     "notifications": {
-      "notificationNotFound": "通知が見つかりません"
+      "notificationNotFound": "通知が見つかりません",
+      "showDiff": "差分を表示",
+      "diffTitle": "ディスク上の変更: {name}",
+      "diffInMarkText": "MarkText 内",
+      "diffOnDisk": "ディスク上",
+      "diffUnchangedLines": "変更のない {count} 行",
+      "reloadFromDisk": "ディスクから再読み込み"
     },
     "print": {
       "error": "\"{title}\" の印刷エラー",

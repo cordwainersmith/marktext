@@ -965,7 +965,13 @@
       "columns": "Sütunlar"
     },
     "notifications": {
-      "notificationNotFound": "Bildirim bulunamadı"
+      "notificationNotFound": "Bildirim bulunamadı",
+      "showDiff": "Farkı göster",
+      "diffTitle": "Diskteki değişiklikler: {name}",
+      "diffInMarkText": "MarkText'te",
+      "diffOnDisk": "Diskte",
+      "diffUnchangedLines": "{count} değişmemiş satır",
+      "reloadFromDisk": "Diskten yeniden yükle"
     },
     "print": {
       "error": "\"{title}\" için yazdırma hatası",

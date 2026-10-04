@@ -965,7 +965,13 @@
       "columns": "欄"
     },
     "notifications": {
-      "notificationNotFound": "找不到通知"
+      "notificationNotFound": "找不到通知",
+      "showDiff": "顯示差異",
+      "diffTitle": "磁碟上的變更：{name}",
+      "diffInMarkText": "MarkText 中",
+      "diffOnDisk": "磁碟上",
+      "diffUnchangedLines": "{count} 行未變更",
+      "reloadFromDisk": "從磁碟重新載入"
     },
     "print": {
       "error": "列印 \"{title}\" 時發生錯誤",

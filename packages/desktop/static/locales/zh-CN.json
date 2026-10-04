@@ -960,7 +960,13 @@
       "columns": "列"
     },
     "notifications": {
-      "notificationNotFound": "未找到通知"
+      "notificationNotFound": "未找到通知",
+      "showDiff": "显示差异",
+      "diffTitle": "磁盘上的更改：{name}",
+      "diffInMarkText": "MarkText 中",
+      "diffOnDisk": "磁盘上",
+      "diffUnchangedLines": "{count} 行未更改",
+      "reloadFromDisk": "从磁盘重新加载"
     },
     "sourceCode": {
       "cursorNullComment": "光标位置无注释",

@@ -965,7 +965,13 @@
       "columns": "Colonnes"
     },
     "notifications": {
-      "notificationNotFound": "Notification introuvable"
+      "notificationNotFound": "Notification introuvable",
+      "showDiff": "Voir les différences",
+      "diffTitle": "Modifications sur le disque : {name}",
+      "diffInMarkText": "Dans MarkText",
+      "diffOnDisk": "Sur le disque",
+      "diffUnchangedLines": "{count} lignes inchangées",
+      "reloadFromDisk": "Recharger depuis le disque"
     },
     "print": {
       "error": "Erreur d'impression pour \"{title}\"",

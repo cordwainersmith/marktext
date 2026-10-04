@@ -965,7 +965,13 @@
       "columns": "Kolommen"
     },
     "notifications": {
-      "notificationNotFound": "Melding niet gevonden"
+      "notificationNotFound": "Melding niet gevonden",
+      "showDiff": "Verschillen tonen",
+      "diffTitle": "Wijzigingen op schijf: {name}",
+      "diffInMarkText": "In MarkText",
+      "diffOnDisk": "Op schijf",
+      "diffUnchangedLines": "{count} ongewijzigde regels",
+      "reloadFromDisk": "Opnieuw laden van schijf"
     },
     "print": {
       "error": "Afdrukfout voor \"{title}\"",

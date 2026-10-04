@@ -61,6 +61,7 @@ interface PushTabNotificationPayload {
   style?: string
   exclusiveType?: string
   action?: FileNotification['action']
+  diskMarkdown?: string
 }
 
 interface FileChangePayload {
@@ -307,7 +308,8 @@ export const useEditorStore = defineStore('editor', {
         showConfirm,
         style,
         exclusiveType,
-        action
+        action,
+        diskMarkdown: data.diskMarkdown
       })
     },
 
@@ -318,6 +320,7 @@ export const useEditorStore = defineStore('editor', {
         msg: t('store.editor.fileChangedOnDisk', { name: tab.filename }),
         showConfirm: true,
         exclusiveType: 'file_changed',
+        diskMarkdown: change.data.markdown,
         action: (status) => {
           if (status) {
             this.loadChange(change)
