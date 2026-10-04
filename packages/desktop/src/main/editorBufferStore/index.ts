@@ -14,9 +14,52 @@ interface BufferStoreEntry {
   filePath: string
 }
 
-interface BufferStoreContent {
-  tabs: Array<{ isSaved: boolean; [key: string]: unknown }>
+interface BufferedTab {
+  id: string
+  pathname?: string | null
+  isSaved: boolean
   [key: string]: unknown
+}
+
+interface BufferStoreContent {
+  tabs: BufferedTab[]
+  currentFileId?: string | null
+  restoreWarnings?: Array<{ tabId?: string | null; [key: string]: unknown }>
+  [key: string]: unknown
+}
+
+// Folds several windows' buffers into one. The first state wins for layout,
+// project and current tab. A saved tab whose file is already open is dropped
+// since it reloads from disk anyway, but unsaved tabs are always kept so no
+// edit is lost. Tab ids only need to be unique within one buffer, so they are
+// prefixed with the buffer's index to keep them apart once merged.
+export const mergeBufferStates = (states: BufferStoreContent[]): BufferStoreContent => {
+  const scopedId = (index: number, id: string): string => `${index}:${id}`
+  const openPathnames = new Set<string>()
+  const tabs: BufferedTab[] = []
+  const restoreWarnings: NonNullable<BufferStoreContent['restoreWarnings']> = []
+
+  states.forEach((state, index) => {
+    for (const tab of state.tabs) {
+      if (tab.pathname && tab.isSaved && openPathnames.has(tab.pathname)) continue
+      if (tab.pathname) openPathnames.add(tab.pathname)
+      tabs.push({ ...tab, id: scopedId(index, tab.id) })
+    }
+    for (const warning of state.restoreWarnings ?? []) {
+      restoreWarnings.push({
+        ...warning,
+        tabId: warning.tabId ? scopedId(index, warning.tabId) : warning.tabId
+      })
+    }
+  })
+
+  const [first] = states
+  return {
+    ...first,
+    tabs,
+    currentFileId: first.currentFileId ? scopedId(0, first.currentFileId) : first.currentFileId,
+    restoreWarnings
+  }
 }
 
 interface EditorWindow {
@@ -86,6 +129,39 @@ class EditorBufferStore extends TypedEmitter<EditorBufferStoreEvents> {
         console.error('Failed to read buffer store file during clear', e)
       }
     }
+  }
+
+  // Merges every readable buffer store into the most recently written one and
+  // deletes the rest, so a restart restores one window instead of stacking a
+  // window per buffer on top of each other. Unreadable stores are left on disk
+  // untouched. Returns null when there is nothing to restore.
+  mergeAllBufferStores(): BufferStoreEntry | null {
+    const readable: Array<{ entry: BufferStoreEntry; state: BufferStoreContent; mtime: number }> =
+      []
+    const stores = this.getAllBufferStores()
+    for (const entry of Object.values(stores)) {
+      try {
+        const state = this.readBufferStoreFile(entry.filePath)
+        readable.push({ entry, state, mtime: fs.statSync(entry.filePath).mtimeMs })
+      } catch (e) {
+        console.error('Failed to read buffer store file during merge', e)
+      }
+    }
+
+    if (readable.length === 0) return null
+    readable.sort((a, b) => b.mtime - a.mtime)
+    const [target, ...rest] = readable
+    if (rest.length === 0) return target.entry
+
+    this.writeBufferStoreFile(
+      target.entry.filePath,
+      mergeBufferStates(readable.map((r) => r.state))
+    )
+    for (const { entry } of rest) {
+      fs.unlinkSync(entry.filePath)
+      delete stores[entry.id]
+    }
+    return target.entry
   }
 
   handleClose(restoreBufferId: string | undefined, editorWindows: EditorWindow[]): void {

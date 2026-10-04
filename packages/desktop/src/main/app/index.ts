@@ -339,21 +339,12 @@ class App {
 
     const createWindow = (): void => {
       if (isRestorePathway) {
-        // We will restore based off the previous buffer, one window per buffer store file
-        const bufferStores = editorBufferStore.getAll()
-        const bufferStoreList = Object.values(bufferStores) as Array<{
-          id: string
-          filePath: string | null
-        }>
-        if (bufferStoreList.length === 0) {
+        const bufferStoreInfo = editorBufferStore.mergeAllBufferStores()
+        if (!bufferStoreInfo) {
           this._createEditorWindow()
           return
         }
-
-        bufferStoreList.forEach((bufferStoreInfo) => {
-          // Read the buffer store file and pass the content
-          this._createEditorWindow(null, [], [], {}, bufferStoreInfo)
-        })
+        this._createEditorWindow(null, [], [], {}, bufferStoreInfo)
       } else if (_openFilesCache.length) {
         // We should wipe the buffer store if not it will keep creating new windows whenever we open files via double click in the file manager
         editorBufferStore.clearBufferStoresWithAllSaved()
