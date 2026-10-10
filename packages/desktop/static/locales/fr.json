@@ -262,6 +262,7 @@
       "search": "Rechercher",
       "toc": "Table des matières",
       "wikiInbox": "Déposer dans la boîte de réception llm-wiki",
+      "driveUpload": "Envoyer vers Google Docs",
       "settings": "Paramètres"
     },
     "wikiInbox": {
@@ -269,6 +270,22 @@
       "dropped": "Déposé dans {pathname}. Lancez un ingest pour le compiler.",
       "duplicate": "Déjà en attente dans la boîte de réception sous {pathname}.",
       "failed": "Impossible de déposer dans la boîte de réception : {error}"
+    },
+    "driveUpload": {
+      "title": "Envoyer vers Google Docs",
+      "noFile": "Aucun fichier ouvert.",
+      "toFolder": "Envoyer dans un dossier",
+      "root": "Mon Drive",
+      "destination": "Destination : {name}",
+      "updatesExisting": "Ce fichier a déjà été envoyé. Un nouvel envoi met à jour le même document.",
+      "upload": "Envoyer",
+      "uploading": "Envoi en cours…",
+      "created": "Nouveau document Google créé.",
+      "updated": "Document Google existant mis à jour.",
+      "open": "Ouvrir dans Google Docs",
+      "notConfigured": "L'envoi vers Drive n'est pas configuré : {error}",
+      "noPandoc": "Pandoc est nécessaire pour convertir le fichier. Installez-le depuis pandoc.org.",
+      "failed": "Échec de l'envoi : {error}"
     }
   },
   "commandPalette": {

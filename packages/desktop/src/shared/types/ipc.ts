@@ -32,6 +32,12 @@ import type {
 } from './files'
 import type { BufferedState as BufferedStateType } from './bufferedState'
 import type { MenuTemplate, MenuPopupPosition } from './menu'
+import type {
+  DriveFolder,
+  DriveUploadRequest,
+  DriveUploadResult,
+  DriveUploadStatus
+} from './driveUpload'
 
 // =================================================================
 // Invoke channels (renderer → main, returns Promise<T>)
@@ -43,6 +49,9 @@ export interface IpcInvokeChannels {
   'mt::clipboard::guess-file-path': { args: []; ret: string | null }
   'mt::clipboard::read-text': { args: []; ret: string }
   'mt::cmd::exists': { args: [name: string]; ret: boolean }
+  'mt::drive-upload::list-folders': { args: [parentId: string | null]; ret: DriveFolder[] }
+  'mt::drive-upload::status': { args: [pathname: string | null]; ret: DriveUploadStatus }
+  'mt::drive-upload::upload': { args: [req: DriveUploadRequest]; ret: DriveUploadResult }
   'mt::fonts::list': { args: []; ret: string[] }
   'mt::fs-trash-item': { args: [pathname: string]; ret: void }
   'mt::fs::copy': { args: [src: string, dest: string]; ret: void }

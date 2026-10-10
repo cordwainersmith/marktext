@@ -262,6 +262,7 @@
       "search": "検索",
       "toc": "目次",
       "wikiInbox": "llm-wiki の受信トレイに送る",
+      "driveUpload": "Google ドキュメントにアップロード",
       "settings": "設定"
     },
     "wikiInbox": {
@@ -269,6 +270,22 @@
       "dropped": "{pathname} に保存しました。コンパイルするには ingest を実行してください。",
       "duplicate": "すでに {pathname} として受信トレイにあります。",
       "failed": "受信トレイに保存できませんでした: {error}"
+    },
+    "driveUpload": {
+      "title": "Google ドキュメントにアップロード",
+      "noFile": "開いているファイルがありません。",
+      "toFolder": "フォルダにアップロード",
+      "root": "マイドライブ",
+      "destination": "保存先: {name}",
+      "updatesExisting": "このファイルは以前にアップロードされています。再度アップロードすると同じドキュメントが更新されます。",
+      "upload": "アップロード",
+      "uploading": "アップロード中…",
+      "created": "新しい Google ドキュメントを作成しました。",
+      "updated": "既存の Google ドキュメントを更新しました。",
+      "open": "Google ドキュメントで開く",
+      "notConfigured": "Drive アップロードが設定されていません: {error}",
+      "noPandoc": "ファイルの変換には Pandoc が必要です。pandoc.org からインストールしてください。",
+      "failed": "アップロードに失敗しました: {error}"
     }
   },
   "commandPalette": {

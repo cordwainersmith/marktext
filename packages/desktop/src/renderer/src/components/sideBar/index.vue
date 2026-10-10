@@ -62,6 +62,7 @@ import Toc from './toc.vue'
 import { storeToRefs } from 'pinia'
 import { t } from '@/i18n'
 import notice from '@/services/notification'
+import bus from '@/bus'
 import { dropIntoWikiInbox } from '@/services/wikiInbox'
 import type { TabDescriptor } from './types'
 
@@ -164,11 +165,26 @@ const dropToWikiInbox = async (): Promise<void> => {
   }
 }
 
+const openDriveUpload = (): void => {
+  const file = editorStore.currentFile
+  if (!file) {
+    notice.notify({
+      title: t('sideBar.icons.driveUpload'),
+      message: t('sideBar.driveUpload.noFile'),
+      type: 'warning'
+    })
+    return
+  }
+  bus.emit('drive-upload', file)
+}
+
 const handleLeftBottomClick = async (name: string): Promise<void> => {
   if (name === 'settings') {
     projectStore.OPEN_SETTING_WINDOW()
   } else if (name === 'wikiInbox') {
     await dropToWikiInbox()
+  } else if (name === 'driveUpload') {
+    openDriveUpload()
   }
 }
 </script>

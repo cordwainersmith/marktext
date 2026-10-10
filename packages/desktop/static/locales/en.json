@@ -262,6 +262,7 @@
       "search": "Search",
       "toc": "Table of Contents",
       "wikiInbox": "Drop into llm-wiki inbox",
+      "driveUpload": "Upload to Google Docs",
       "settings": "Settings"
     },
     "wikiInbox": {
@@ -269,6 +270,22 @@
       "dropped": "Dropped into {pathname}. Run an ingest to compile it.",
       "duplicate": "Already waiting in the inbox as {pathname}.",
       "failed": "Could not drop into the inbox: {error}"
+    },
+    "driveUpload": {
+      "title": "Upload to Google Docs",
+      "noFile": "No file is open.",
+      "toFolder": "Upload to a folder",
+      "root": "My Drive",
+      "destination": "Destination: {name}",
+      "updatesExisting": "This file was uploaded before. Uploading again updates the same Doc.",
+      "upload": "Upload",
+      "uploading": "Uploading…",
+      "created": "Created a new Google Doc.",
+      "updated": "Updated the existing Google Doc.",
+      "open": "Open in Google Docs",
+      "notConfigured": "Drive upload is not configured: {error}",
+      "noPandoc": "Pandoc is required to convert the file. Install it from pandoc.org.",
+      "failed": "Upload failed: {error}"
     }
   },
   "commandPalette": {

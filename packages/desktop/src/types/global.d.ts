@@ -12,6 +12,12 @@ import type {
 } from '@shared/types/ipc'
 import type { MenuTemplate, MenuPopupPosition } from '@shared/types/menu'
 import type { SerializedStat } from '@shared/types/files'
+import type {
+  DriveFolder,
+  DriveUploadRequest,
+  DriveUploadResult,
+  DriveUploadStatus
+} from '@shared/types/driveUpload'
 
 declare global {
   // ---- Build-time defines (electron-vite `define`) ----
@@ -165,6 +171,12 @@ declare global {
     list(): Promise<string[]>
   }
 
+  interface DriveUploadAPI {
+    status(pathname: string | null): Promise<DriveUploadStatus>
+    listFolders(parentId: string | null): Promise<DriveFolder[]>
+    upload(req: DriveUploadRequest): Promise<DriveUploadResult>
+  }
+
   interface ProcessShim {
     platform: NodeJS.Platform
     arch?: string
@@ -184,6 +196,7 @@ declare global {
     ripgrep: RipgrepAPI
     uploader: UploaderAPI
     fonts: FontsAPI
+    driveUpload: DriveUploadAPI
     process: ProcessShim
     rgPath: string
     // Set by the legacy editor store at runtime; consumed by muya internals.

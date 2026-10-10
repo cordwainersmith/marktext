@@ -262,6 +262,7 @@
       "search": "Suchen",
       "toc": "Inhaltsverzeichnis",
       "wikiInbox": "In llm-wiki-Posteingang ablegen",
+      "driveUpload": "In Google Docs hochladen",
       "settings": "Einstellungen"
     },
     "wikiInbox": {
@@ -269,6 +270,22 @@
       "dropped": "In {pathname} abgelegt. Führen Sie einen Ingest aus, um sie zu kompilieren.",
       "duplicate": "Wartet bereits als {pathname} im Posteingang.",
       "failed": "Ablegen im Posteingang fehlgeschlagen: {error}"
+    },
+    "driveUpload": {
+      "title": "In Google Docs hochladen",
+      "noFile": "Keine Datei geöffnet.",
+      "toFolder": "In einen Ordner hochladen",
+      "root": "Meine Ablage",
+      "destination": "Ziel: {name}",
+      "updatesExisting": "Diese Datei wurde bereits hochgeladen. Erneutes Hochladen aktualisiert dasselbe Dokument.",
+      "upload": "Hochladen",
+      "uploading": "Wird hochgeladen…",
+      "created": "Neues Google-Dokument erstellt.",
+      "updated": "Vorhandenes Google-Dokument aktualisiert.",
+      "open": "In Google Docs öffnen",
+      "notConfigured": "Drive-Upload ist nicht eingerichtet: {error}",
+      "noPandoc": "Zum Konvertieren wird Pandoc benötigt. Installieren Sie es von pandoc.org.",
+      "failed": "Hochladen fehlgeschlagen: {error}"
     }
   },
   "commandPalette": {

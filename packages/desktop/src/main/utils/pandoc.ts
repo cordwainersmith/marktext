@@ -6,7 +6,7 @@ import { isFile2 } from 'common/filesystem'
 
 const pandocCommand = 'pandoc'
 
-const getCommand = (): string => {
+export const getCommand = (): string => {
   if (envPathExists()) {
     return process.env.MARKTEXT_PANDOC as string
   }

@@ -262,6 +262,7 @@
       "search": "Buscar",
       "toc": "Tabla de Contenidos",
       "wikiInbox": "Enviar a la bandeja de entrada de llm-wiki",
+      "driveUpload": "Subir a Google Docs",
       "settings": "Configuración"
     },
     "wikiInbox": {
@@ -269,6 +270,22 @@
       "dropped": "Enviado a {pathname}. Ejecute un ingest para compilarlo.",
       "duplicate": "Ya está en la bandeja de entrada como {pathname}.",
       "failed": "No se pudo enviar a la bandeja de entrada: {error}"
+    },
+    "driveUpload": {
+      "title": "Subir a Google Docs",
+      "noFile": "No hay ningún archivo abierto.",
+      "toFolder": "Subir a una carpeta",
+      "root": "Mi unidad",
+      "destination": "Destino: {name}",
+      "updatesExisting": "Este archivo ya se subió antes. Subirlo de nuevo actualiza el mismo documento.",
+      "upload": "Subir",
+      "uploading": "Subiendo…",
+      "created": "Se creó un nuevo documento de Google.",
+      "updated": "Se actualizó el documento de Google existente.",
+      "open": "Abrir en Google Docs",
+      "notConfigured": "La subida a Drive no está configurada: {error}",
+      "noPandoc": "Se necesita Pandoc para convertir el archivo. Instálalo desde pandoc.org.",
+      "failed": "Error al subir: {error}"
     }
   },
   "commandPalette": {

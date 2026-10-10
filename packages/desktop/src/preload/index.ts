@@ -17,6 +17,7 @@ import type {
   IpcMainEventChannels,
   BootInfo
 } from '@shared/types/ipc'
+import type { DriveUploadRequest } from '@shared/types/driveUpload'
 
 type RendererEventListener<K extends keyof IpcMainEventChannels> = (
   event: IpcRendererEvent,
@@ -226,6 +227,12 @@ const fontsAPI = {
   list: () => invoke('mt::fonts::list')
 }
 
+const driveUploadAPI = {
+  status: (pathname: string | null) => invoke('mt::drive-upload::status', pathname),
+  listFolders: (parentId: string | null) => invoke('mt::drive-upload::list-folders', parentId),
+  upload: (req: DriveUploadRequest) => invoke('mt::drive-upload::upload', req)
+}
+
 const electronAPI = {
   ipcRenderer: ipcWrapper,
   shell: shellAPI,
@@ -294,6 +301,7 @@ try {
   contextBridge.exposeInMainWorld('ripgrep', ripgrepAPI)
   contextBridge.exposeInMainWorld('uploader', uploaderAPI)
   contextBridge.exposeInMainWorld('fonts', fontsAPI)
+  contextBridge.exposeInMainWorld('driveUpload', driveUploadAPI)
 } catch (error) {
   console.error(error)
 }

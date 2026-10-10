@@ -32,6 +32,7 @@
       <about-dialog />
       <export-setting-dialog />
       <rename />
+      <drive-upload />
       <import-modal />
     </div>
   </div>
@@ -50,6 +51,7 @@ import AboutDialog from '@/components/about/index.vue'
 import CommandPalette from '@/components/commandPalette/index.vue'
 import ExportSettingDialog from '@/components/exportSettings/index.vue'
 import Rename from '@/components/rename/index.vue'
+import DriveUpload from '@/components/driveUpload/index.vue'
 import ImportModal from '@/components/import/index.vue'
 import bus from '@/bus'
 import { DEFAULT_STYLE } from '@/config'

@@ -363,6 +363,44 @@ need a main-process `child_process` handler, which is a real new security
 surface in a `sandbox: true` renderer for a pipeline that takes minutes and calls
 an LLM.
 
+## Fork-local: the Google Drive upload button
+
+The second fork-local rail button, also **never sent upstream**. It opens a small
+dialog that turns the current tab into a native Google Doc in Liran's Drive.
+
+| File                                                       | Role                                                    |
+| ---------------------------------------------------------- | ------------------------------------------------------- |
+| `fork-local/drive-upload/`                                 | Apps Script backend (`Code.gs`, manifest, deploy steps) |
+| `packages/desktop/src/main/driveUpload/index.ts`           | pandoc conversion, Apps Script client, state            |
+| `packages/desktop/src/main/ipc/driveUpload.ts`             | `mt::drive-upload::{status,list-folders,upload}`        |
+| `packages/desktop/src/shared/types/driveUpload.ts`         | Shared request and result types                         |
+| `.../renderer/src/components/driveUpload/index.vue`        | Dialog, opened by bus event `drive-upload`              |
+| `.../renderer/src/components/sideBar/help.ts`, `index.vue` | `driveUpload` rail entry and click handler              |
+| `packages/desktop/test/unit/specs/drive-upload.spec.ts`    | 8 specs against the main module                         |
+| `packages/desktop/static/locales/*.json`                   | `sideBar.icons.driveUpload`, `sideBar.driveUpload.*`    |
+
+How it works: main runs pandoc (`gfm` to `docx`, markdown on stdin, cwd set to
+the tab's folder so relative images embed) and POSTs the docx to a personal Apps
+Script web app, which imports it with the Advanced Drive service as a Google
+Doc. Docx rather than HTML because KaTeX math and local images do not survive an
+HTML import.
+
+- Credentials live in `~/.config/marktext/drive-upload.json`
+  (`{ webAppUrl, apiKey }`), read only by main. Hardcoded on purpose, like the
+  wiki inbox path. Do not turn it into a preference.
+- A saved tab's Doc id is remembered in `userData/drive-upload-state.json`, and
+  later clicks re-import into the same Doc, keeping its link. Untitled tabs
+  always create a new Doc. The folder picker only applies to the first upload;
+  the last folder used is preselected.
+- The script needs the full `drive` scope because the folder browser reads and
+  writes arbitrary existing folders, which `drive.file` cannot see.
+- Redeploy the script by editing the existing deployment (new version), never
+  "New deployment", or the URL in the config file goes stale.
+
+Unlike the wiki button this one adds three IPC channels and spawns pandoc from
+main. Pandoc spawning already existed for File > Import, the arguments are fixed,
+and the markdown travels on stdin.
+
 ## Running and packaging this clone on macOS
 
 Neither `pnpm` nor `corepack` is installed on this machine, so the documented

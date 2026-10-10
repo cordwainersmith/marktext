@@ -262,6 +262,7 @@
       "search": "Ara",
       "toc": "İçindekiler",
       "wikiInbox": "llm-wiki gelen kutusuna bırak",
+      "driveUpload": "Google Dokümanlar'a yükle",
       "settings": "Ayarlar"
     },
     "wikiInbox": {
@@ -269,6 +270,22 @@
       "dropped": "{pathname} konumuna bırakıldı. Derlemek için bir ingest çalıştırın.",
       "duplicate": "Gelen kutusunda {pathname} olarak zaten bekliyor.",
       "failed": "Gelen kutusuna bırakılamadı: {error}"
+    },
+    "driveUpload": {
+      "title": "Google Dokümanlar'a yükle",
+      "noFile": "Açık dosya yok.",
+      "toFolder": "Bir klasöre yükle",
+      "root": "Drive'ım",
+      "destination": "Hedef: {name}",
+      "updatesExisting": "Bu dosya daha önce yüklendi. Yeniden yüklemek aynı dokümanı günceller.",
+      "upload": "Yükle",
+      "uploading": "Yükleniyor…",
+      "created": "Yeni bir Google dokümanı oluşturuldu.",
+      "updated": "Mevcut Google dokümanı güncellendi.",
+      "open": "Google Dokümanlar'da aç",
+      "notConfigured": "Drive yüklemesi yapılandırılmamış: {error}",
+      "noPandoc": "Dosyayı dönüştürmek için Pandoc gerekli. pandoc.org adresinden yükleyin.",
+      "failed": "Yükleme başarısız: {error}"
     }
   },
   "commandPalette": {

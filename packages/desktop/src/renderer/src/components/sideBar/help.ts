@@ -4,7 +4,8 @@ import {
   Search as SearchIcon,
   Memo as TocIcon,
   Promotion as WikiInboxIcon,
-  Setting as SettingIcon
+  Setting as SettingIcon,
+  UploadFilled as DriveUploadIcon
 } from '@element-plus/icons-vue'
 import { t } from '@/i18n'
 
@@ -42,6 +43,11 @@ export const sideBarBottomIcons: SideBarIconEntry[] = [
     id: 'wikiInbox',
     name: () => t('sideBar.icons.wikiInbox'),
     icon: WikiInboxIcon
+  },
+  {
+    id: 'driveUpload',
+    name: () => t('sideBar.icons.driveUpload'),
+    icon: DriveUploadIcon
   },
   {
     id: 'settings',

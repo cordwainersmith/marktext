@@ -262,6 +262,7 @@
       "search": "Zoeken",
       "toc": "Inhoudsopgave",
       "wikiInbox": "Naar llm-wiki-postvak IN sturen",
+      "driveUpload": "Uploaden naar Google Docs",
       "settings": "Instellingen"
     },
     "wikiInbox": {
@@ -269,6 +270,22 @@
       "dropped": "Naar {pathname} geplaatst. Voer een ingest uit om het te compileren.",
       "duplicate": "Staat al in het postvak IN als {pathname}.",
       "failed": "Kan niet naar het postvak IN plaatsen: {error}"
+    },
+    "driveUpload": {
+      "title": "Uploaden naar Google Docs",
+      "noFile": "Er is geen bestand geopend.",
+      "toFolder": "Uploaden naar een map",
+      "root": "Mijn Drive",
+      "destination": "Bestemming: {name}",
+      "updatesExisting": "Dit bestand is eerder geüpload. Opnieuw uploaden werkt hetzelfde document bij.",
+      "upload": "Uploaden",
+      "uploading": "Bezig met uploaden…",
+      "created": "Nieuw Google-document gemaakt.",
+      "updated": "Bestaand Google-document bijgewerkt.",
+      "open": "Openen in Google Docs",
+      "notConfigured": "Drive-upload is niet ingesteld: {error}",
+      "noPandoc": "Pandoc is nodig om het bestand te converteren. Installeer het via pandoc.org.",
+      "failed": "Uploaden mislukt: {error}"
     }
   },
   "commandPalette": {

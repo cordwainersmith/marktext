@@ -262,6 +262,7 @@
       "search": "검색",
       "toc": "목차",
       "wikiInbox": "llm-wiki 수신함으로 보내기",
+      "driveUpload": "Google 문서에 업로드",
       "settings": "설정"
     },
     "wikiInbox": {
@@ -269,6 +270,22 @@
       "dropped": "{pathname}에 저장했습니다. 컴파일하려면 ingest를 실행하세요.",
       "duplicate": "이미 {pathname}(으)로 수신함에 있습니다.",
       "failed": "수신함에 저장하지 못했습니다: {error}"
+    },
+    "driveUpload": {
+      "title": "Google 문서에 업로드",
+      "noFile": "열린 파일이 없습니다.",
+      "toFolder": "폴더에 업로드",
+      "root": "내 드라이브",
+      "destination": "대상: {name}",
+      "updatesExisting": "이 파일은 이전에 업로드되었습니다. 다시 업로드하면 같은 문서가 업데이트됩니다.",
+      "upload": "업로드",
+      "uploading": "업로드 중…",
+      "created": "새 Google 문서를 만들었습니다.",
+      "updated": "기존 Google 문서를 업데이트했습니다.",
+      "open": "Google 문서에서 열기",
+      "notConfigured": "Drive 업로드가 설정되지 않았습니다: {error}",
+      "noPandoc": "파일을 변환하려면 Pandoc이 필요합니다. pandoc.org에서 설치하세요.",
+      "failed": "업로드 실패: {error}"
     }
   },
   "commandPalette": {

@@ -262,6 +262,7 @@
       "search": "搜索",
       "toc": "目录",
       "wikiInbox": "放入 llm-wiki 收件箱",
+      "driveUpload": "上传到 Google 文档",
       "settings": "设置"
     },
     "wikiInbox": {
@@ -269,6 +270,22 @@
       "dropped": "已放入 {pathname}。运行 ingest 以编译它。",
       "duplicate": "已在收件箱中，文件名为 {pathname}。",
       "failed": "无法放入收件箱：{error}"
+    },
+    "driveUpload": {
+      "title": "上传到 Google 文档",
+      "noFile": "没有打开的文件。",
+      "toFolder": "上传到文件夹",
+      "root": "我的云端硬盘",
+      "destination": "目标位置：{name}",
+      "updatesExisting": "此文件之前已上传。再次上传将更新同一文档。",
+      "upload": "上传",
+      "uploading": "正在上传…",
+      "created": "已创建新的 Google 文档。",
+      "updated": "已更新现有的 Google 文档。",
+      "open": "在 Google 文档中打开",
+      "notConfigured": "尚未配置 Drive 上传：{error}",
+      "noPandoc": "转换文件需要 Pandoc。请从 pandoc.org 安装。",
+      "failed": "上传失败：{error}"
     }
   },
   "commandPalette": {
